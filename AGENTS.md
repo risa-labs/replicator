@@ -14,6 +14,7 @@ direction, `docs/ROADMAP.md` for what is next and `docs/REQUIREMENTS-workbench.m
 pip install -e ".[all]"                                         # once, in a venv
 python -m pytest -q                                             # all tests, under 30 s; must stay green
 python -m tools.check path/to/program.json                      # validate, build, mass, critic; exit 1 on a FIX issue
+python -m tools.machinability path/to/program.json              # per part on a 3-axis mill: stock, setups, what stays uncut
 python -m replicator.app replicator/fixtures/rocket_engine.json --software \
     --shot out/x.png [--mode build|dissect|reverse|showcase|present] [--ui materials|commander|preferences]
 python -m tools.rocket_fixture                                  # regenerate the reference rocket engine
@@ -41,6 +42,7 @@ takes one frame of the real window in a headless gamescope. Shots and recordings
 | `replicator/core/blender_link.py`, `render.py` | Blender MCP round trip, Cycles stills (CPU) |
 | `replicator/core/step.py`, `export.py` | STEP (faceted B-rep, one solid per lump, cavities as voids), STL, 3MF, GLB, OBJ |
 | `replicator/core/drawing.py` | A3 sheets: third-angle views, section or floor plan (buildings), dimensions, parts list |
+| `replicator/core/machining.py` | machinability on a 3-axis mill: machine and tool profiles (`MACHINES`, `TOOLS`), fewest setups, what stays uncut and why (hidden, too tight, too deep), as critic issues; `tools/machinability.py` prints it per part |
 | `replicator/mcp_server.py` | the workshop as MCP tools; every write validated and built first; `.mcp.json` registers it |
 | `replicator/knowledge/*.md` | curated cards (real parts and proportions), picked by keyword into the specify prompts |
 | `replicator/llm/client.py`, `llm/prompts/*.md` | specify (`client.dream`: blueprint, program, repair, critique round), edit (optionally scoped), naming, explain; `engines()` = built-ins plus `endpoints` from services.json |
